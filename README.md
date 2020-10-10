@@ -11,7 +11,7 @@
 <!-- PROJECT LOGO -->
 
 <p align="center">
-    <img height="100px" src='https://fontmeme.com/permalink/201008/653b455589d67398bfed737d5aedf6bb.png' alt="Logo">
+    <img height="100px" src='https://fontmeme.com/permalink/201010/dfd39e1dcf6387c15b8d133399e762bd.png' alt="Logo">
 </p>
 
 <br />
