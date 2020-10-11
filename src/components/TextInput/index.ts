@@ -1,1 +1,1 @@
-export { Input, InputSearch } from "./styles";
+export { InputSearch } from "./styles";

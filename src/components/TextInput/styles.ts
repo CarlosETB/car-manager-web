@@ -1,18 +1,13 @@
+import { Input } from 'antd'
 import styled from "styled-components";
-import { Input as InputComponent} from 'antd'
 
-const { Search } = InputComponent;
+const { Search } = Input;
 
 export const InputSearch = styled(Search).attrs({
-    size: 'large'
+    size: 'large',
+    enterButton: true
 })`
     width: 100%;
+    margin: 20px 0;
 `;
 
-export const Input = styled(InputComponent).attrs({
-    size: 'large'
-})`
-    width: 100%;
-    border-radius: 5px;
-    border: 1px solid var(--blackLighter);
-`;

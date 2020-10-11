@@ -1,7 +1,8 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
 
 // Native
-import { Space, Input } from 'antd'
+import { Space, Button } from 'antd'
+import axios from 'axios'
 
 // Components
 import { InputSearch } from '../../components/TextInput'
@@ -19,89 +20,102 @@ import api from "../../services/api";
 import { Cars } from '../../shared/interface'
 
 const Home = () => {
-    const { Search } = Input;
-    const [data, setData] = useState([])
-    const [dataSource, setDataSource] = useState([])
+  
+  const [data, setData] = useState([])
+  const [dataSource, setDataSource] = useState([])
 
-    const { handleMoneyFormat } = useMoneyFormat()
+  const { handleMoneyFormat } = useMoneyFormat()
 
-    const columns = [
+  const columns = [
       {
         title: 'Nome',
         dataIndex: 'title',
-        key: 'id',
+        key: '_id',
+        editable: true
       },
       {
         title: 'Marca',
         dataIndex: 'brand',
-        key: 'id',
+        key: '_id',
       },
       {
         title: 'Preço',
         dataIndex: 'price',
-        key: 'id',
+        key: '_id',
         render: (text: string) => handleMoneyFormat(Number(text)),
       },
       {
         title: 'Ano',
         dataIndex: 'age',
-        key: 'id',
+        key: '_id',
       },
       {
-        title: "Action",
-        dataIndex: 'action',
-        key: "id",
-        render: () => (
+        title: "Ações",
+        key: "_id",
+        render: (key: Cars) => (
           <Space size="middle">
-            <a>Editar</a>
-            <a>Deletar</a>
+            <Button 
+              type="link" 
+              danger 
+              onClick={() => handleDelete(String(key._id))}>
+              Deletar
+            </Button>
           </Space>
         )
       }
-    ];
+  ];
 
-    const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
-      const { value } = event.target;
-    
-      const filtered = data.filter((item: Cars) => { 
-        return item.title?.toLowerCase().match( value.toLowerCase() )
+  useEffect(() => {
+    try {
+      api.get('cars').then((response) => {
+        if(response.status === 200){
+          setData(response.data)
+          setDataSource(response.data)
+        } 
+        else {
+          alert('Houve algum erro com o requerimento de dados')
+        }
       });
+    } catch (e) {
+      console.log(e)
+    } 
+  }, []);
 
-      setDataSource(filtered)
-    }
+  const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+  
+    const filtered = data.filter((item: Cars) => { 
+      return item.title?.toLowerCase().match( value.toLowerCase() )
+    });
+    setDataSource(filtered)
+  }
 
-    useEffect(() => {
-      try {
-        api.get('cars').then((response) => {
-          if(response.status === 200){
-            setData(response.data) 
-            setDataSource(response.data) 
-          } 
-          else {
-            alert('Houve algum erro com o requerimento de dados')
-          }
-        });
-      } catch (e) {
-        console.log(e)
-      }
-        
-    }, []);
+  const handleDelete = async (id: string) => {
+    await api.delete(`cars/${id}`).then(() => {
+      alert('Veículo deletado com sucesso')
+      window.location.reload()
+    })
+    .catch((e) => {
+      alert(e)
+    }) 
+  }
 
-    return (
-      <PageDefault>
-        <Title>Lista de veículos:</Title>
-        
-        <InputSearch
-          onChange={handleSearch}
-          placeholder="Pesquisar carro"
-        />
-         
-        <Table 
-          columns={columns} 
-          dataSource={dataSource} 
-        />
-      </PageDefault>
-    )
+  return (
+    <PageDefault>
+      <Title>Lista de veículos:</Title>
+
+      <InputSearch
+        onChange={handleSearch}
+        placeholder="Pesquisar carro"
+      />
+       
+      <Table 
+        columns={columns} 
+        dataSource={dataSource} 
+      />
+
+    </PageDefault>
+  )
 }
 
 export default Home

@@ -1,5 +1,5 @@
-export interface Cars {
-  id?: string;
+export type Cars = {
+  _id?: string;
   title?: string;
   price?: string;
   age?: number;
