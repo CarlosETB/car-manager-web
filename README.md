@@ -39,7 +39,7 @@ Aplicação para gerenciar o cadastro de carros e exibe as informações e funç
 API REST EXTERNA A SER CONSUMIDA
 
 ```sh
-    - http://157.230.213.199:3000/api
+    http://157.230.213.199:3000/api
 ```
 
 <br />
@@ -64,6 +64,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - **[JavaScript](https://www.javascript.com/)**
 - **[TypeScript](https://www.typescriptlang.org/)**
 - **[Styled Components](https://styled-components.com/)**
+- **[Ant Design](https://ant.design/)**
 
 \* Veja o arquivo <kbd>[package.json](./package.json)</kbd>
 
