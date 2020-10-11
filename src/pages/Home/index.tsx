@@ -1,11 +1,22 @@
 import React, {useEffect, useState} from 'react'
-import api from "../../services/api";
-import { Table } from 'antd'
 
-import {Container } from './styles'
+// Native
+import { Table, Space } from 'antd'
+
+// Components
+import PageDefault from '../../components/PageDefault'
+import { Title } from '../../components/Text'
+
+// Hooks
+import { useMoneyFormat } from '../../hooks'
+
+// Services
+import api from "../../services/api";
 
 const Home = () => {
-    const [data, setData ] = useState([])
+    const [data, setData] = useState([])
+
+    const { handleMoneyFormat } = useMoneyFormat()
 
     const columns = [
       {
@@ -22,24 +33,36 @@ const Home = () => {
         title: 'Preço',
         dataIndex: 'price',
         key: 'price',
+        render: (text: string) => handleMoneyFormat(Number(text)),
       },
       {
         title: 'Ano',
         dataIndex: 'age',
         key: 'age',
       },
+      {
+        title: "Action",
+        key: "action",
+        render: () => (
+          <Space size="middle">
+            <a>Editar</a>
+            <a>Deletar</a>
+          </Space>
+        )
+      }
     ];
 
     useEffect(() => {
         api.get(`/cars`).then((response) => {
-          setData(response.data);
+          response.status === 200 && setData(response.data);
         });
     }, []);
 
     return (
-      <Container>Home:
-        <Table columns={columns} dataSource={data} />
-      </Container>
+      <PageDefault>
+        <Title>Lista de veículos:</Title>
+        <Table columns={columns} dataSource={data} bordered />
+      </PageDefault>
     )
 }
 
