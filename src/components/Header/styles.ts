@@ -6,8 +6,6 @@ export const Container = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 999;
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;

@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState, ChangeEvent } from 'react'
 
 // Native
-import { Table, Space } from 'antd'
+import { Space, Input } from 'antd'
 
 // Components
+import { InputSearch } from '../../components/TextInput'
 import PageDefault from '../../components/PageDefault'
+import { Table } from '../../components/Table'
 import { Title } from '../../components/Text'
 
 // Hooks
@@ -13,8 +15,13 @@ import { useMoneyFormat } from '../../hooks'
 // Services
 import api from "../../services/api";
 
+// Shared
+import { Cars } from '../../shared/interface'
+
 const Home = () => {
+    const { Search } = Input;
     const [data, setData] = useState([])
+    const [dataSource, setDataSource] = useState([])
 
     const { handleMoneyFormat } = useMoneyFormat()
 
@@ -22,27 +29,28 @@ const Home = () => {
       {
         title: 'Nome',
         dataIndex: 'title',
-        key: 'title',
+        key: 'id',
       },
       {
         title: 'Marca',
         dataIndex: 'brand',
-        key: 'brand',
+        key: 'id',
       },
       {
         title: 'Preço',
         dataIndex: 'price',
-        key: 'price',
+        key: 'id',
         render: (text: string) => handleMoneyFormat(Number(text)),
       },
       {
         title: 'Ano',
         dataIndex: 'age',
-        key: 'age',
+        key: 'id',
       },
       {
         title: "Action",
-        key: "action",
+        dataIndex: 'action',
+        key: "id",
         render: () => (
           <Space size="middle">
             <a>Editar</a>
@@ -52,16 +60,46 @@ const Home = () => {
       }
     ];
 
+    const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
+    
+      const filtered = data.filter((item: Cars) => { 
+        return item.title?.toLowerCase().match( value.toLowerCase() )
+      });
+
+      setDataSource(filtered)
+    }
+
     useEffect(() => {
-        api.get(`/cars`).then((response) => {
-          response.status === 200 && setData(response.data);
+      try {
+        api.get('cars').then((response) => {
+          if(response.status === 200){
+            setData(response.data) 
+            setDataSource(response.data) 
+          } 
+          else {
+            alert('Houve algum erro com o requerimento de dados')
+          }
         });
+      } catch (e) {
+        console.log(e)
+      }
+        
     }, []);
 
     return (
       <PageDefault>
         <Title>Lista de veículos:</Title>
-        <Table columns={columns} dataSource={data} bordered />
+        
+        <InputSearch
+          onChange={handleSearch}
+          placeholder="Pesquisar carro"
+        />
+         
+        <Table 
+          columns={columns} 
+          dataSource={dataSource} 
+        />
       </PageDefault>
     )
 }
