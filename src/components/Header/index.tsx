@@ -4,10 +4,10 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
 // Components
-import { Button } from "components/Button";
+import { Button } from "../Button";
 
 // Shared
-import { Logo } from "shared/images";
+import { Logo } from "../../shared/images";
 
 // Private
 import { Container, Image } from "./styles";

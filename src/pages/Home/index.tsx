@@ -2,7 +2,6 @@ import React, { useEffect, useState, ChangeEvent } from 'react'
 
 // Native
 import { Space, Button } from 'antd'
-import axios from 'axios'
 
 // Components
 import { InputSearch } from '../../components/TextInput'
