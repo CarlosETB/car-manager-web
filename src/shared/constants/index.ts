@@ -1,0 +1,1 @@
+export { default as brandList } from './brandList'
