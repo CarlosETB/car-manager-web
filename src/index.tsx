@@ -1,7 +1,11 @@
 import React from 'react';
+
+// Native
 import ReactDOM from 'react-dom';
-import Routes from './routes';
 import 'antd/dist/antd.css'
+
+// Private
+import Routes from './routes';
 import "./locales";
 import 'index.css'
 

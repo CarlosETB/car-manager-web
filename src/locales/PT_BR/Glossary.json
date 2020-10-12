@@ -2,5 +2,11 @@
   "name": "Nome",
   "brand": "Marca",
   "price": "Preço",
-  "age": "Ano"
+  "age": "Ano",
+  "action": "Ações",
+  "alertFail": "Houve algum erro com o requerimento de dados",
+  "alertSuccess": "Dados salvos com sucesso",
+  "edit": "Editar",
+  "delete": "Deletar",
+  "errorInput": "Preencha esse campo"
 }

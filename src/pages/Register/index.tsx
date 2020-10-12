@@ -1,45 +1,38 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 
 // Native
 import { useTranslation } from "react-i18next";
 
 // Components
-import PageDefault from '../../components/PageDefault'
-import FormField from '../../components/FormField'
-import { Button } from '../../components/Button'
-import { Title } from '../../components/Text'
-import { Form } from '../../components/Form'
+import PageDefault from 'components/PageDefault'
+import FormField from 'components/FormField'
+import { Button } from 'components/Button'
+import { Title } from 'components/Text'
+import { Form } from 'components/Form'
 
-// Services
-import api from "../../services/api";
+// Hooks
+import { useInputChange } from 'hooks'
 
 // Shared 
-import { brandList } from '../../shared/constants'
-import { Cars } from '../../shared/interface'
+import { brandList } from 'shared/constants'
+import { Cars } from 'shared/interface'
 
+// Hooks
+import { useAPI } from 'hooks'
+ 
 const Register = () => {
+  const { t } = useTranslation("Register");
+
   const [ formData, setFormData ] = useState<Cars>({})
-  
+  const [ titleError, setTitleError ] = useState('')
+  const [ priceError, setPriceError ] = useState('')
+  const [ ageError, setAgeError ] = useState('')
+  const [ brandError, setBrandError ] = useState('')
+
+  const { handleInputChange } = useInputChange(setFormData)
+  const { apiPost } = useAPI(setFormData)
+   
   const { options } = brandList()
-
-  const { t } = useTranslation(["Glossary", "Register"]);
-
-  useEffect(() => {
-    api.get('cars').then((response) => {
-      if(response.status === 200){
-        setFormData(response.data)
-      } 
-      else {
-        alert(t('alertFail'))
-      }
-    });
-  }, []);
-
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = event.target;
-
-    setFormData({ ...formData, [name]: value });
-  }
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -52,13 +45,20 @@ const Register = () => {
     data.append("price", String(price));
     data.append("age", String(age));
     data.append("brand", String(brand));
-
-    await api.post('cars', formData).then(() => {
-      alert(t('alertSuccess'))
-    })
-    .catch((e) => {
-      alert(e)
-    }) 
+    
+    if(title === '') {
+      setTitleError(t('Glossary:errorInput'))
+    }
+    else if(price === '') {
+      setPriceError(t('Glossary:errorInput'))
+    }
+    else if(String(age) === '') {
+      setAgeError(t('Glossary:errorInput'))
+    }
+    else if(brand === '') {
+      setBrandError(t('Glossary:errorInput'))
+    }
+    else apiPost(formData)
   }
 
   return ( 
@@ -67,32 +67,40 @@ const Register = () => {
 
       <Form onSubmit={handleSubmit}>
         <FormField 
+          name="title"  
+          error={titleError}
+          value={formData.title}
+          label={t('Glossary:name')}
           onChange={handleInputChange} 
-          name="title" 
-          label={t('name')} 
         />  
 
-        <FormField 
-          onChange={handleInputChange} 
-          name="price" 
-          label={t('price')} 
+        <FormField  
+          name="price"  
           type='number'
+          error={priceError}
+          value={formData.price}
+          label={t('Glossary:price')}
+          onChange={handleInputChange}
         />
 
         <FormField 
-          onChange={handleInputChange} 
-          name="brand" 
-          label={t('brand')}  
+          name="brand"  
+          error={brandError}
           suggestions={options}
+          value={formData.brand}
+          label={t('Glossary:brand')}
+          onChange={handleInputChange} 
         />
 
         <FormField 
-          onChange={handleInputChange} 
-          name="age" 
-          label={t('age')} 
+          name="age"  
           min={1940}
           max={2020}
-        />    
+          error={ageError}
+          value={formData.age}
+          label={t('Glossary:age')}
+          onChange={handleInputChange} 
+        />     
 
         <Button type='submit'>{t('button')}</Button>
       </Form>

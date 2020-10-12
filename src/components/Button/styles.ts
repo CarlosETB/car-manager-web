@@ -10,13 +10,13 @@ export const Button = styled.button`
   padding: 14px 24px;
   font-style: normal;
   align-items: center;
-  color: var(--primary);
+  color: var(--black);
   text-decoration: none;
   display: inline-block;
   box-sizing: border-box;
   transition: opacity 0.3s;
   background: var(--transparent);
-  border: 1px solid var(--primary);
+  border: 1px solid var(--black);
   &:hover,
   &:focus {
     opacity: 0.5;

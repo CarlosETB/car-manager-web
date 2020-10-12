@@ -1,6 +1,4 @@
 {
   "title": "Cadastrar veículo",
-  "alertFail": "Houve algum erro com o requerimento de dados",
-  "alertSuccess": "Veículo editado com sucesso",
   "button": "Salvar mudanças"
 }

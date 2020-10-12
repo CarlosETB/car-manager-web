@@ -22,25 +22,27 @@ export const LabelText = styled.span`
 `;
 
 interface InputProps {
+  error: boolean;
   value: string[];
 }
 
 export const Input = styled.input<InputProps>`
-  background: var(--grayLight);
-  color: var(--black);
-  display: block;
+  border: 0;
+  outline: 0;
   width: 100%;
   height: 57px;
-  font-size: 18px;
-  outline: 0;
-  border: 0;
-  border: 1px solid var(--blackLighter);
-  padding: 16px 16px;
   resize: none;
+  display: block;
+  font-size: 18px;
+  color: var(--black);
+  padding: 16px 16px;
   border-radius: 4px;
+  background: var(--grayLight);
   transition: border-color 0.3s;
+  border: 1px solid var(--blackLighter);
+  border-color: ${(props: InputProps) => props.error && 'var(--dangerColor)'};
   &:focus {
-    border-bottom: 4px solid var(--secondary);
+    border-bottom: 4px solid var(--primary);
   }
   ${({ value }) => {
     const hasValue = value !== "";
@@ -53,4 +55,10 @@ export const Input = styled.input<InputProps>`
       `
     );
   }}
+`;
+
+export const Text = styled.span`
+  padding: 10px;
+  font-size: 15px;
+  color: var(--dangerColor);
 `;

@@ -1,115 +1,116 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 
 // Native
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Components
-import PageDefault from '../../components/PageDefault'
-import FormField from '../../components/FormField'
-import { Button } from '../../components/Button'
-import { Title } from '../../components/Text'
-import { Form } from '../../components/Form'
-
-// Services
-import api from "../../services/api";
+import PageDefault from 'components/PageDefault'
+import FormField from 'components/FormField'
+import { Button } from 'components/Button'
+import { Title } from 'components/Text'
+import { Form } from 'components/Form'
+ 
+// Hooks
+import { useAPI, useInputChange } from 'hooks'
 
 // Shared
-import { brandList } from '../../shared/constants'
-import { Cars } from '../../shared/interface'
+import { brandList } from 'shared/constants'
+import { Cars } from 'shared/interface'
 
 const Edit = () => {
-    const [ formData, setFormData ] = useState<Cars>({})
+  const { t } = useTranslation("Edit");
 
-    const { t } = useTranslation(["Glossary", "Edit"]);
-
-    const history = useHistory();
-    const location = useLocation()
-
-    const id = location.state;
-
-    const { options } = brandList()
-
-    useEffect(() => {
-      api.get(`cars/${id}`).then((response) => {
-        if(response.status === 200){
-          setFormData(response.data)
-        } 
-        else {
-          alert(t('alertFail'))
-        }
-      });
-    }, [id]);
-
-    function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target;
+  const [ formData, setFormData ] = useState<Cars>({})
+  const [ titleError, setTitleError ] = useState('')
+  const [ priceError, setPriceError ] = useState('')
+  const [ ageError, setAgeError ] = useState('')
+  const [ brandError, setBrandError ] = useState('')
     
-        setFormData({ ...formData, [name]: value });
-      }
+  const { handleInputChange } = useInputChange(setFormData)
+  const { apiGetID, apiPut } = useAPI(setFormData)
+  const location = useLocation()
     
-      const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault();
+  const { options } = brandList()
+
+  const id = location.state
+
+  useEffect(() => {
+    apiGetID(String(id))
+  }, []);
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const { title, price, age, brand } = formData;
+
+    const data = new FormData();
     
-        const { title, price, age, brand } = formData;
+    data.append("title", String(title));
+    data.append("price", String(price));
+    data.append("age", String(age));
+    data.append("brand", String(brand));
     
-        const data = new FormData();
+    if(title === '') {
+      setTitleError(t('Glossary:errorInput'))
+    }
+    else if(price === '') {
+      setPriceError(t('Glossary:errorInput'))
+    }
+    else if(String(age) === '') {
+      setAgeError(t('Glossary:errorInput'))
+    }
+    else if(brand === '') {
+      setBrandError(t('Glossary:errorInput'))
+    }
+    else apiPut(formData)
+  }
+
+  return (
+    <PageDefault>
+      <Title>{t('title')}:</Title>
+      
+      <Form onSubmit={handleSubmit}>
+        <FormField 
+          name="title"  
+          error={titleError}
+          value={formData.title}
+          label={t('Glossary:name')}
+          onChange={handleInputChange} 
+        />  
+
+        <FormField  
+          name="price"  
+          type='number'
+          error={priceError}
+          value={formData.price}
+          label={t('Glossary:price')}
+          onChange={handleInputChange}
+        />
         
-        data.append("title", String(title));
-        data.append("price", String(price));
-        data.append("age", String(age));
-        data.append("brand", String(brand));
-    
-        await api.put(`cars/${id}`, formData).then(() => {
-          alert(t('alertSuccess'))
+        <FormField 
+          name="brand"  
+          error={brandError}
+          suggestions={options}
+          value={formData.brand}
+          label={t('Glossary:brand')}
+          onChange={handleInputChange} 
+        />
 
-          history.push('/')
-        })
-        .catch((e) => {
-          alert(e)
-        }) 
-      }
+        <FormField 
+          name="age"  
+          min={1940}
+          max={2020}
+          error={ageError}
+          value={formData.age}
+          label={t('Glossary:age')}
+          onChange={handleInputChange} 
+        />    
 
-    return (
-        <PageDefault>
-            <Title>{t('title')}:</Title>
-
-            <Form onSubmit={handleSubmit}>
-                <FormField 
-                  onChange={handleInputChange} 
-                  name="title" 
-                  label={t('name')} 
-                  value={formData.title}
-                />  
-
-                <FormField 
-                  onChange={handleInputChange} 
-                  name="price" 
-                  label={t('price')} 
-                  type='number'
-                  value={formData.price}
-                />
-
-                <FormField 
-                  onChange={handleInputChange} 
-                  name="brand" 
-                  label={t('brand')} 
-                  suggestions={options}
-                  value={formData.brand}
-                />
-
-                <FormField 
-                  onChange={handleInputChange} 
-                  name="age" 
-                  label={t('age')} 
-                  min={1940}
-                  max={2020}
-                  value={formData.age}
-                />    
-
-                <Button type='submit'>{t('button')} </Button>
-            </Form>
-        </PageDefault>
-    )
+        <Button type='submit'>{t('button')}</Button>
+      </Form>
+    </PageDefault>
+  )
 }
 
 export default Edit

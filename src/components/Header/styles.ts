@@ -13,7 +13,7 @@ export const Container = styled.header`
   padding-left: 5%;
   padding-right: 5%;
   background: var(--white);
-  border-bottom: 2px solid var(--primary);
+  border-bottom: 2px solid var(--black);
 `;
 
 export const Image = styled.img`
