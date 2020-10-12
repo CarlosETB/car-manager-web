@@ -19,16 +19,21 @@ import { Cars } from '../../shared/interface'
 
 // Hooks
 import { useAPI } from '../../hooks'
-
+ 
 const Register = () => {
+  const { t } = useTranslation("Register");
+
   const [ formData, setFormData ] = useState<Cars>({})
+  const [ titleError, setTitleError ] = useState('')
+  const [ priceError, setPriceError ] = useState('')
+  const [ ageError, setAgeError ] = useState('')
+  const [ brandError, setBrandError ] = useState('')
+
   const { handleInputChange } = useInputChange(setFormData)
   const { apiPost } = useAPI(setFormData)
    
   const { options } = brandList()
 
-  const { t } = useTranslation("Register");
- 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
@@ -40,8 +45,20 @@ const Register = () => {
     data.append("price", String(price));
     data.append("age", String(age));
     data.append("brand", String(brand));
-
-    apiPost(formData)
+    
+    if(title === '') {
+      setTitleError(t('Glossary:errorInput'))
+    }
+    else if(price === '') {
+      setPriceError(t('Glossary:errorInput'))
+    }
+    else if(String(age) === '') {
+      setAgeError(t('Glossary:errorInput'))
+    }
+    else if(brand === '') {
+      setBrandError(t('Glossary:errorInput'))
+    }
+    else apiPost(formData)
   }
 
   return ( 
@@ -49,37 +66,41 @@ const Register = () => {
       <Title>{t('title')}:</Title>
 
       <Form onSubmit={handleSubmit}>
-        <FormField  
+        <FormField 
+          name="title"  
+          error={titleError}
           value={formData.title}
-          name={t('Glossary:title')} 
-          label={t('Glossary:name')} 
-          onChange={handleInputChange}
+          label={t('Glossary:name')}
+          onChange={handleInputChange} 
         />  
 
-        <FormField 
-          name="price" 
+        <FormField  
+          name="price"  
           type='number'
+          error={priceError}
           value={formData.price}
-          label={t('Glossary:price')} 
-          onChange={handleInputChange} 
+          label={t('Glossary:price')}
+          onChange={handleInputChange}
         />
 
         <FormField 
           name="brand"  
+          error={brandError}
           suggestions={options}
           value={formData.brand}
-          label={t('Glossary:brand')} 
+          label={t('Glossary:brand')}
           onChange={handleInputChange} 
         />
 
         <FormField 
-          name="age" 
+          name="age"  
           min={1940}
           max={2020}
+          error={ageError}
           value={formData.age}
-          label={t('Glossary:age')} 
+          label={t('Glossary:age')}
           onChange={handleInputChange} 
-        />    
+        />     
 
         <Button type='submit'>{t('button')}</Button>
       </Form>

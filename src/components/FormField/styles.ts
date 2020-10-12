@@ -22,6 +22,7 @@ export const LabelText = styled.span`
 `;
 
 interface InputProps {
+  error: boolean;
   value: string[];
 }
 
@@ -39,6 +40,7 @@ export const Input = styled.input<InputProps>`
   background: var(--grayLight);
   transition: border-color 0.3s;
   border: 1px solid var(--blackLighter);
+  border-color: ${(props: InputProps) => props.error && 'var(--dangerColor)'};
   &:focus {
     border-bottom: 4px solid var(--primary);
   }
@@ -53,4 +55,10 @@ export const Input = styled.input<InputProps>`
       `
     );
   }}
+`;
+
+export const Text = styled.span`
+  padding: 10px;
+  font-size: 15px;
+  color: var(--dangerColor);
 `;

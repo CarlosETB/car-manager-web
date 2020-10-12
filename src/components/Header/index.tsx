@@ -1,7 +1,7 @@
 import React from "react";
 
 // Native
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Components

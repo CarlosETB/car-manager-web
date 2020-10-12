@@ -1,36 +1,33 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-// Services
-import api from "../services/api";
+// Hooks
+import { useAPI } from 'hooks'
 
 // Shared
-import { Cars } from '../shared/interface'
+import { Cars } from 'shared/interface'
 
 export default (setData: any) => {
     const [apiItem, setApiItem] = useState([])
+    const { apiGet } = useAPI(setApiItem)
 
     useEffect(() => {
-        api.get('cars').then((response) => {
-          if(response.status === 200){
-            setApiItem(response.data)
-          } 
-        }).catch((e) => alert(e))
-      }, []);
+      apiGet()
+    }, []);
 
     const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-    
-        setData((data: any) => { return { ...data, [name]: value } });
+      const { name, value } = event.target;
+  
+      setData((data: any) => { return { ...data, [name]: value } });
     }
 
     const handleSearchChange = async (event: ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
+      const { value } = event.target;
+    
+      const filtered = apiItem.filter((item: Cars) => { 
+        return item.title?.toLowerCase().match( value.toLowerCase() )
+      });
       
-        const filtered = apiItem.filter((item: Cars) => { 
-          return item.title?.toLowerCase().match( value.toLowerCase() )
-        });
-
-        setData(filtered)
+      setData(filtered)
     }
 
     return {

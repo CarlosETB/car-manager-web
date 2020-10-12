@@ -7,5 +7,6 @@
   "alertFail": "Houve algum erro com o requerimento de dados",
   "alertSuccess": "Dados salvos com sucesso",
   "edit": "Editar",
-  "delete": "Deletar"
+  "delete": "Deletar",
+  "errorInput": "Preencha esse campo"
 }

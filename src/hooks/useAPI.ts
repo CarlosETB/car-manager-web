@@ -13,30 +13,31 @@ export default (setData: any) => {
     const history = useHistory();
 
     const apiGet = async () => {
-        await api.get('cars').then((response) => {
-          if(response.status === 200) {
-            return setData(response.data)
-          } 
-        }).catch((e) => alert(e))
+      await api.get('cars').then((response) => {
+        if(response.status === 200) {
+          return setData(response.data)
+        } 
+      }).catch((e) => alert(e))
     }
 
     const apiGetID = async (id: string) => {
-        await api.get(`cars/${id}`).then((response) => {
+      await api.get(`cars/${id}`)
+        .then((response) => {
           if(response.status === 200) {
             return setData(response.data)
           } 
           else alert(t('Glossary:alertFail'))
-        }).catch((e) => alert(e));
+        })
+        .catch((e) => alert(e));
     }
 
     const apiPut = async (formData: Cars) => {
-      await api.put(`cars/${formData._id}`, formData).then(() => {
-        alert(t('Glossary:alertSuccess'))
-        history.push('/')
-      })
-      .catch((e) => {
-        alert(e)
-      }) 
+      await api.put(`cars/${formData._id}`, formData)
+        .then(() => {
+          alert(t('Glossary:alertSuccess'))
+          history.push('/')
+        })
+        .catch((e) =>  alert(e)) 
     }
 
     const apiPost = async (formData: Cars) => {
@@ -49,9 +50,9 @@ export default (setData: any) => {
     }
   
     return {
-        apiGet,
-        apiGetID,
-        apiPost,
-        apiPut
+      apiGet,
+      apiGetID,
+      apiPost,
+      apiPut
     }
 }
