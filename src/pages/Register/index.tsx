@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react'
+import React, { useState } from 'react'
 
 // Native
 import { useTranslation } from "react-i18next";
@@ -11,7 +11,7 @@ import { Title } from 'components/Text'
 import { Form } from 'components/Form'
 
 // Hooks
-import { useInputChange } from 'hooks'
+import { useInputChange, useFormSubmit } from 'hooks'
 
 // Shared 
 import { brandList } from 'shared/constants'
@@ -24,42 +24,17 @@ const Register: React.FC  = () => {
   const { t } = useTranslation("Register");
 
   const [ formData, setFormData ] = useState<Cars>({})
-  const [ titleError, setTitleError ] = useState('')
-  const [ priceError, setPriceError ] = useState('')
-  const [ ageError, setAgeError ] = useState('')
-  const [ brandError, setBrandError ] = useState('')
-
   const { handleInputChange } = useInputChange(setFormData)
   const { apiPost } = useAPI(setFormData)
+  const { 
+    handleSubmit, 
+    ageError, 
+    brandError, 
+    priceError, 
+    titleError 
+  } = useFormSubmit(formData, apiPost)
    
   const { options } = brandList()
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-
-    const { title, price, age, brand } = formData;
-
-    const data = new FormData();
-    
-    data.append("title", String(title));
-    data.append("price", String(price));
-    data.append("age", String(age));
-    data.append("brand", String(brand));
-    
-    if(title === '') {
-      setTitleError(t('Glossary:errorInput'))
-    }
-    else if(price === '') {
-      setPriceError(t('Glossary:errorInput'))
-    }
-    else if(String(age) === '') {
-      setAgeError(t('Glossary:errorInput'))
-    }
-    else if(brand === '') {
-      setBrandError(t('Glossary:errorInput'))
-    }
-    else apiPost(formData)
-  }
 
   return ( 
     <PageDefault>

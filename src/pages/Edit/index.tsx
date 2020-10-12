@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Native
 import { useLocation } from "react-router-dom";
@@ -12,7 +12,7 @@ import { Title } from 'components/Text'
 import { Form } from 'components/Form'
  
 // Hooks
-import { useAPI, useInputChange } from 'hooks'
+import { useAPI, useFormSubmit, useInputChange } from 'hooks'
 
 // Shared
 import { brandList } from 'shared/constants'
@@ -22,13 +22,17 @@ const Edit: React.FC = () => {
   const { t } = useTranslation("Edit");
 
   const [ formData, setFormData ] = useState<Cars>({})
-  const [ titleError, setTitleError ] = useState('')
-  const [ priceError, setPriceError ] = useState('')
-  const [ ageError, setAgeError ] = useState('')
-  const [ brandError, setBrandError ] = useState('')
-    
+
   const { handleInputChange } = useInputChange(setFormData)
   const { apiGetID, apiPut } = useAPI(setFormData)
+  const { 
+    handleSubmit, 
+    ageError, 
+    brandError, 
+    priceError, 
+    titleError 
+  } = useFormSubmit(formData, apiPut)
+
   const location = useLocation()
     
   const { options } = brandList()
@@ -38,26 +42,6 @@ const Edit: React.FC = () => {
   useEffect(() => {
     apiGetID(String(id))
   }, []);
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-
-    const { title, price, age, brand } = formData;
-    
-    if(title === '') {
-      setTitleError(t('Glossary:errorInput'))
-    }
-    else if(price === '') {
-      setPriceError(t('Glossary:errorInput'))
-    }
-    else if(String(age) === '') {
-      setAgeError(t('Glossary:errorInput'))
-    }
-    else if(brand === '') {
-      setBrandError(t('Glossary:errorInput'))
-    }
-    else apiPut(formData)
-  }
 
   return (
     <PageDefault>
