@@ -1,7 +1,7 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 
 // Native
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 // Components
@@ -10,9 +10,9 @@ import FormField from '../../components/FormField'
 import { Button } from '../../components/Button'
 import { Title } from '../../components/Text'
 import { Form } from '../../components/Form'
-
-// Services
-import api from "../../services/api";
+ 
+// Hooks
+import { useAPI, useInputChange } from '../../hooks'
 
 // Shared
 import { brandList } from '../../shared/constants'
@@ -20,54 +20,35 @@ import { Cars } from '../../shared/interface'
 
 const Edit = () => {
     const [ formData, setFormData ] = useState<Cars>({})
+    const { apiGetID, apiPut } = useAPI(setFormData)
+    const { handleInputChange } = useInputChange(setFormData)
 
-    const { t } = useTranslation(["Glossary", "Edit"]);
-
-    const history = useHistory();
+    const { t } = useTranslation("Edit");
+    
     const location = useLocation()
-
-    const id = location.state;
 
     const { options } = brandList()
 
+    const idItem = location.state
+
     useEffect(() => {
-      api.get(`cars/${id}`).then((response) => {
-        if(response.status === 200){
-          setFormData(response.data)
-        } 
-        else {
-          alert(t('alertFail'))
-        }
-      });
-    }, [id]);
+      apiGetID(String(idItem))
+    }, []);
 
-    function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target;
-    
-        setFormData({ ...formData, [name]: value });
-      }
-    
-      const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault();
-    
-        const { title, price, age, brand } = formData;
-    
-        const data = new FormData();
-        
-        data.append("title", String(title));
-        data.append("price", String(price));
-        data.append("age", String(age));
-        data.append("brand", String(brand));
-    
-        await api.put(`cars/${id}`, formData).then(() => {
-          alert(t('alertSuccess'))
-
-          history.push('/')
-        })
-        .catch((e) => {
-          alert(e)
-        }) 
-      }
+    const handleSubmit = async (event: FormEvent) => {
+      event.preventDefault();
+  
+      const { title, price, age, brand } = formData;
+  
+      const data = new FormData();
+      
+      data.append("title", String(title));
+      data.append("price", String(price));
+      data.append("age", String(age));
+      data.append("brand", String(brand));
+  
+      apiPut(formData)
+    }
 
     return (
         <PageDefault>
@@ -77,14 +58,14 @@ const Edit = () => {
                 <FormField 
                   onChange={handleInputChange} 
                   name="title" 
-                  label={t('name')} 
+                  label={t('Glossary:name')} 
                   value={formData.title}
                 />  
 
                 <FormField 
                   onChange={handleInputChange} 
                   name="price" 
-                  label={t('price')} 
+                  label={t('Glossary:price')} 
                   type='number'
                   value={formData.price}
                 />
@@ -92,7 +73,7 @@ const Edit = () => {
                 <FormField 
                   onChange={handleInputChange} 
                   name="brand" 
-                  label={t('brand')} 
+                  label={t('Glossary:brand')} 
                   suggestions={options}
                   value={formData.brand}
                 />
@@ -100,7 +81,7 @@ const Edit = () => {
                 <FormField 
                   onChange={handleInputChange} 
                   name="age" 
-                  label={t('age')} 
+                  label={t('Glossary:age')} 
                   min={1940}
                   max={2020}
                   value={formData.age}

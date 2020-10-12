@@ -14,8 +14,8 @@ a {
 }
 
 :root {
-  --primary: #000000;
-  --secondary: #1f964e;
+  --primary: #1f964e;
+  --dangerColor: "#ff4d4d";
   --black: #000000;
   --transparent: #ff00;
   --blackLighter: #9e9e9e;

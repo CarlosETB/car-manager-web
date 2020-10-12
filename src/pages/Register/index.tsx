@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 
 // Native
 import { useTranslation } from "react-i18next";
@@ -10,37 +10,25 @@ import { Button } from '../../components/Button'
 import { Title } from '../../components/Text'
 import { Form } from '../../components/Form'
 
-// Services
-import api from "../../services/api";
+// Hooks
+import { useInputChange } from '../../hooks'
 
 // Shared 
 import { brandList } from '../../shared/constants'
 import { Cars } from '../../shared/interface'
 
+// Hooks
+import { useAPI } from '../../hooks'
+
 const Register = () => {
   const [ formData, setFormData ] = useState<Cars>({})
-  
+  const { handleInputChange } = useInputChange(setFormData)
+  const { apiPost } = useAPI(setFormData)
+   
   const { options } = brandList()
 
-  const { t } = useTranslation(["Glossary", "Register"]);
-
-  useEffect(() => {
-    api.get('cars').then((response) => {
-      if(response.status === 200){
-        setFormData(response.data)
-      } 
-      else {
-        alert(t('alertFail'))
-      }
-    });
-  }, []);
-
-  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = event.target;
-
-    setFormData({ ...formData, [name]: value });
-  }
-
+  const { t } = useTranslation("Register");
+ 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
@@ -53,12 +41,7 @@ const Register = () => {
     data.append("age", String(age));
     data.append("brand", String(brand));
 
-    await api.post('cars', formData).then(() => {
-      alert(t('alertSuccess'))
-    })
-    .catch((e) => {
-      alert(e)
-    }) 
+    apiPost(formData)
   }
 
   return ( 
@@ -66,32 +49,36 @@ const Register = () => {
       <Title>{t('title')}:</Title>
 
       <Form onSubmit={handleSubmit}>
-        <FormField 
-          onChange={handleInputChange} 
-          name="title" 
-          label={t('name')} 
+        <FormField  
+          value={formData.title}
+          name={t('Glossary:title')} 
+          label={t('Glossary:name')} 
+          onChange={handleInputChange}
         />  
 
         <FormField 
-          onChange={handleInputChange} 
           name="price" 
-          label={t('price')} 
           type='number'
+          value={formData.price}
+          label={t('Glossary:price')} 
+          onChange={handleInputChange} 
         />
 
         <FormField 
-          onChange={handleInputChange} 
-          name="brand" 
-          label={t('brand')}  
+          name="brand"  
           suggestions={options}
+          value={formData.brand}
+          label={t('Glossary:brand')} 
+          onChange={handleInputChange} 
         />
 
         <FormField 
-          onChange={handleInputChange} 
           name="age" 
-          label={t('age')} 
           min={1940}
           max={2020}
+          value={formData.age}
+          label={t('Glossary:age')} 
+          onChange={handleInputChange} 
         />    
 
         <Button type='submit'>{t('button')}</Button>

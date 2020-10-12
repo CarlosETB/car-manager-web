@@ -11,5 +11,5 @@ export const Form = styled.form.attrs({
   border-radius: 5px;
   flex-direction: column;
   justify-content: space-around;
-  border: 1px solid var(--primary);
+  border: 1px solid var(--black);
 `;

@@ -24,9 +24,9 @@ const FormField: React.FC<LayoutProps> = (props) => {
     max, 
     name,
     type,
-    value,
     onChange,
     min: min || 0,
+    value: value || '',
     autoComplete: "off",
     list: `suggestionFor_${id}`,
   };
