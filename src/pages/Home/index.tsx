@@ -1,9 +1,10 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
 
 // Native
+import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { Space, Button } from 'antd'
-
+ 
 // Components
 import { InputSearch } from '../../components/TextInput'
 import PageDefault from '../../components/PageDefault'
@@ -20,7 +21,8 @@ import api from "../../services/api";
 import { Cars } from '../../shared/interface'
 
 const Home = () => {
-  
+  const { t } = useTranslation("Home");
+
   const [data, setData] = useState([])
   const [dataSource, setDataSource] = useState([])
 
@@ -28,44 +30,44 @@ const Home = () => {
   const history = useHistory();
 
   const columns = [
-      {
-        title: 'Nome',
+      { 
+        title: t('name'),
         dataIndex: 'title',
         key: '_id',
         editable: true
       },
       {
-        title: 'Marca',
+        title: t('brand'),
         dataIndex: 'brand',
         key: '_id',
       },
       {
-        title: 'Preço',
+        title: t('price'),
         dataIndex: 'price',
         key: '_id',
         render: (text: string) => handleMoneyFormat(Number(text)),
       },
       {
-        title: 'Ano',
+        title: t('age'),
         dataIndex: 'age',
         key: '_id',
       },
       {
-        title: "Ações",
+        title: t('action'),
         key: "_id",
         render: (key: Cars) => (
           <Space size="middle">
              <Button 
               type="link" 
               onClick={() => handleEdit(String(key._id))}>
-              Editar
+              {t('edit')}
             </Button>
 
             <Button 
               type="link" 
               danger 
               onClick={() => handleDelete(String(key._id))}>
-              Deletar
+              {t('delete')}
             </Button>
           </Space>
         )
@@ -79,7 +81,7 @@ const Home = () => {
         setDataSource(response.data)
       } 
       else {
-        alert('Houve algum erro com o requerimento de dados')
+        alert(t('alertFail'))
       }
     });
   }, []);
@@ -102,7 +104,7 @@ const Home = () => {
 
   const handleDelete = async (id: string) => {
     await api.delete(`cars/${id}`).then(() => {
-      alert('Veículo deletado com sucesso')
+      alert(t('alertSuccess'))
       window.location.reload()
     })
     .catch((e) => {
@@ -112,11 +114,11 @@ const Home = () => {
 
   return (
     <PageDefault>
-      <Title>Lista de veículos:</Title>
+      <Title>{t('title')}:</Title>
 
       <InputSearch
         onChange={handleSearch}
-        placeholder="Pesquisar carro"
+        placeholder={t('placeholder')}
       />
        
       <Table 

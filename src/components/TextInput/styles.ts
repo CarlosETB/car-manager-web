@@ -8,6 +8,6 @@ export const InputSearch = styled(Search).attrs({
     enterButton: true
 })`
     width: 100%;
-    margin: 20px 0;
+    margin-bottom: 5px;
 `;
 

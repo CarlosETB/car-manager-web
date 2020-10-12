@@ -1,5 +1,8 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
+// Native
+import { useTranslation } from "react-i18next";
+
 // Components
 import PageDefault from '../../components/PageDefault'
 import FormField from '../../components/FormField'
@@ -19,13 +22,15 @@ const Register = () => {
   
   const { options } = brandList()
 
+  const { t } = useTranslation("Register");
+
   useEffect(() => {
     api.get('cars').then((response) => {
       if(response.status === 200){
         setFormData(response.data)
       } 
       else {
-        alert('Houve algum erro com o requerimento de dados')
+        alert(t('alertFail'))
       }
     });
   }, []);
@@ -49,7 +54,7 @@ const Register = () => {
     data.append("brand", String(brand));
 
     await api.post('cars', formData).then(() => {
-      alert('Veículo cadastrado com sucesso')
+      alert(t('alertSuccess'))
     })
     .catch((e) => {
       alert(e)
@@ -58,38 +63,38 @@ const Register = () => {
 
   return ( 
     <PageDefault>
-      <Title>Cadastrar veículo:</Title>
+      <Title>{t('title')}:</Title>
 
       <Form onSubmit={handleSubmit}>
         <FormField 
           onChange={handleInputChange} 
           name="title" 
-          label='Nome' 
+          label={t('name')} 
         />  
 
         <FormField 
           onChange={handleInputChange} 
           name="price" 
-          label='Preço' 
+          label={t('price')} 
           type='number'
         />
 
         <FormField 
           onChange={handleInputChange} 
           name="brand" 
-          label='Marca' 
+          label={t('brand')}  
           suggestions={options}
         />
 
         <FormField 
           onChange={handleInputChange} 
           name="age" 
-          label='Ano' 
+          label={t('age')} 
           min={1940}
           max={2020}
         />    
 
-        <Button type='submit'>Cadastrar</Button>
+        <Button type='submit'>{t('button')}</Button>
       </Form>
     </PageDefault>
   )
