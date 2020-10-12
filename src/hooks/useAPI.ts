@@ -8,9 +8,20 @@ import api from "services/api";
 // Shared
 import { Cars } from 'shared/interface'
 
-export default (setData: any) => {
+export default (setData?: any) => {
     const { t } = useTranslation("");
     const history = useHistory();
+
+    const apiDelete = async (id?: string) => {
+      await api.delete(`cars/${id}`)
+        .then(() => {
+          alert(t('alertSuccess'))
+          window.location.reload()
+        })
+        .catch((e) => {
+          alert(e)
+        }) 
+    }
 
     const apiGet = async () => {
       await api.get('cars').then((response) => {
@@ -20,7 +31,7 @@ export default (setData: any) => {
       }).catch((e) => alert(e))
     }
 
-    const apiGetID = async (id: string) => {
+    const apiGetID = async (id?: string) => {
       await api.get(`cars/${id}`)
         .then((response) => {
           if(response.status === 200) {
@@ -31,8 +42,8 @@ export default (setData: any) => {
         .catch((e) => alert(e));
     }
 
-    const apiPut = async (formData: Cars) => {
-      await api.put(`cars/${formData._id}`, formData)
+    const apiPut = async (formData?: Cars) => {
+      await api.put(`cars/${formData?._id}`, formData)
         .then(() => {
           alert(t('Glossary:alertSuccess'))
           history.push('/')
@@ -40,7 +51,7 @@ export default (setData: any) => {
         .catch((e) =>  alert(e)) 
     }
 
-    const apiPost = async (formData: Cars) => {
+    const apiPost = async (formData?: Cars) => {
       await api.post('cars', formData)
       .then(() => {
         alert(t('Glossary:alertSuccess'))
@@ -50,6 +61,7 @@ export default (setData: any) => {
     }
   
     return {
+      apiDelete,
       apiGet,
       apiGetID,
       apiPost,

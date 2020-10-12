@@ -1,1 +1,1 @@
-export { Title } from "./styles";
+export { Title, Name, Brand } from "./styles";

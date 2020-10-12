@@ -4,6 +4,9 @@ import React from 'react'
 import { useTranslation } from "react-i18next";
 import { Space, Button } from 'antd'
 
+// Components
+import { Name, Brand } from 'components/Text'
+
 // Hooks
 import { useActionItem, useMoneyFormat } from 'hooks'
 
@@ -20,11 +23,13 @@ export default () => {
       title: t('name'),
       dataIndex: 'title',
       key: '_id',
+      render: (text: string) => <Name>{text}</Name>,
     },
     {
       title: t('brand'),
       dataIndex: 'brand',
       key: '_id',
+      render: (text: string) => <Brand>{text}</Brand>,
     },
     {
       title: t('price'),

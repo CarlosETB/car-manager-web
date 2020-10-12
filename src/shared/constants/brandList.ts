@@ -1,21 +1,16 @@
 import { useState } from 'react'
 
-// Services
-import api from "services/api";
+// Hooks
+import { useAPI } from 'hooks'
 
 export default () => {
     const [ data, setData ] = useState([])
+    const { apiGet } = useAPI(setData)
 
-    api.get('cars').then((response) => {
-        if(response.status === 200){
-          setData(response.data)
-        } 
-        else {
-          alert('Houve algum erro com o requerimento de dados')
-        }
-    });
+    apiGet()
 
-    const itemBrand = data.map(({ brand }) => brand)
+    const itemBrand = data.map(({ brand }) => String(brand).toUpperCase())
+    
 
     const options = itemBrand.filter(function(index, id) {
       return itemBrand.indexOf(index) === id;

@@ -11,7 +11,7 @@ import { Button } from 'components/Button'
 // Private
 import { Container, Text } from './styles'
 
-const PageError = () => {
+const PageError: React.FC  = () => {
     const { t } = useTranslation("PageError");
 
     const history = useHistory();

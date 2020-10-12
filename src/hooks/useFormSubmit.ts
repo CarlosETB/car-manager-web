@@ -1,20 +1,54 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { FormEvent, useState } from 'react'
 
-// Hooks
-import { useAPI } from 'hooks'
+// Native
+import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
 
-// Shared
-import { Cars } from 'shared/interface'
+export default (formData?: any, apiAction?: any) => {
+  const { t } = useTranslation("");
+  const history = useHistory();
 
-export default (setData: any) => {
- 
-    const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = event.target;
+  const [ titleError, setTitleError ] = useState('')
+  const [ priceError, setPriceError ] = useState('')
+  const [ ageError, setAgeError ] = useState('')
+  const [ brandError, setBrandError ] = useState('')
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const { title, price, age, brand } = formData;
+
+    const data = new FormData();
+    
+    data.append("title", String(title));
+    data.append("price", String(price));
+    data.append("age", String(age));
+    data.append("brand", String(brand));
+    
+    if(title === '') {
+      setTitleError(t('Glossary:errorInput'))
+    }
+    else if(price === '') {
+      setPriceError(t('Glossary:errorInput'))
+    }
+    else if(String(age) === '') {
+      setAgeError(t('Glossary:errorInput'))
+    }
+    else if(brand === '') {
+      setBrandError(t('Glossary:errorInput'))
+    }
+    else {
+      apiAction(formData)
+      history.push("/");
+    }
+  }
+
+  return {
+    handleSubmit,
+    titleError,
+    priceError,
+    ageError,
+    brandError
+  }
   
-      setData((data: any) => { return { ...data, [name]: value } });
-    }
-
-    return {
-        handleInputChange,
-    }
 }
