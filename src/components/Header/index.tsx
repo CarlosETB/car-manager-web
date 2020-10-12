@@ -2,6 +2,7 @@ import React from "react";
 
 // Native
 import { Link, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // Components
 import { Button } from "../Button";
@@ -15,6 +16,8 @@ import { Container, Image } from "./styles";
 const Header = () => {
   const history = useHistory();
 
+  const { t } = useTranslation("Header");
+
   const handleCreate = async () => {
     history.push("/cadastrar");
   };
@@ -25,7 +28,7 @@ const Header = () => {
         <Image src={Logo} />
       </Link>
 
-      <Button onClick={handleCreate}>Cadastrar Veículo</Button>
+      <Button onClick={handleCreate}>{t('button')}</Button>
     </Container>
   );
 };

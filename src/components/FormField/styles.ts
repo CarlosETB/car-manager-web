@@ -36,7 +36,6 @@ export const Input = styled.input<InputProps>`
   border: 0;
   border: 1px solid var(--blackLighter);
   padding: 16px 16px;
-  margin-bottom: 45px;
   resize: none;
   border-radius: 4px;
   transition: border-color 0.3s;

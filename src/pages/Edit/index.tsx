@@ -2,6 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
 // Native
 import { useHistory, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // Components
 import PageDefault from '../../components/PageDefault'
@@ -17,8 +18,10 @@ import api from "../../services/api";
 import { brandList } from '../../shared/constants'
 import { Cars } from '../../shared/interface'
 
-const Edit = (props: any) => {
+const Edit = () => {
     const [ formData, setFormData ] = useState<Cars>({})
+
+    const { t } = useTranslation("Edit");
 
     const history = useHistory();
     const location = useLocation()
@@ -28,16 +31,15 @@ const Edit = (props: any) => {
     const { options } = brandList()
 
     useEffect(() => {
-      console.log('ID', id)
-        api.get(`cars/${id}`).then((response) => {
-          if(response.status === 200){
-            setFormData(response.data)
-          } 
-          else {
-            alert('Houve algum erro com o requerimento de dados')
-          }
-        });
-    }, []);
+      api.get(`cars/${id}`).then((response) => {
+        if(response.status === 200){
+          setFormData(response.data)
+        } 
+        else {
+          alert(t('alertFail'))
+        }
+      });
+    }, [id]);
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target;
@@ -56,11 +58,11 @@ const Edit = (props: any) => {
         data.append("price", String(price));
         data.append("age", String(age));
         data.append("brand", String(brand));
-
-        console.log(formData)
     
         await api.put(`cars/${id}`, formData).then(() => {
-          alert('Veículo cadastrado com sucesso')
+          alert(t('alertSuccess'))
+
+          history.push('/')
         })
         .catch((e) => {
           alert(e)
@@ -69,20 +71,20 @@ const Edit = (props: any) => {
 
     return (
         <PageDefault>
-            <Title>Cadastrar veículo:</Title>
+            <Title>{t('title')}:</Title>
 
             <Form onSubmit={handleSubmit}>
                 <FormField 
                   onChange={handleInputChange} 
                   name="title" 
-                  label='Nome' 
+                  label={t('name')} 
                   value={formData.title}
                 />  
 
                 <FormField 
                   onChange={handleInputChange} 
                   name="price" 
-                  label='Preço' 
+                  label={t('price')} 
                   type='number'
                   value={formData.price}
                 />
@@ -90,7 +92,7 @@ const Edit = (props: any) => {
                 <FormField 
                   onChange={handleInputChange} 
                   name="brand" 
-                  label='Marca' 
+                  label={t('brand')} 
                   suggestions={options}
                   value={formData.brand}
                 />
@@ -98,13 +100,13 @@ const Edit = (props: any) => {
                 <FormField 
                   onChange={handleInputChange} 
                   name="age" 
-                  label='Ano' 
+                  label={t('age')} 
                   min={1940}
                   max={2020}
                   value={formData.age}
                 />    
 
-                <Button type='submit'>Cadastrar</Button>
+                <Button type='submit'>{t('button')} </Button>
             </Form>
         </PageDefault>
     )

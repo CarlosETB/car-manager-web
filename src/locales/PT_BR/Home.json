@@ -1,0 +1,13 @@
+{
+  "title": "Lista de veículos",
+  "placeholder": "Pesquisar carro",
+  "name": "Nome",
+  "brand": "Marca",
+  "price": "Preço",
+  "age": "Ano",
+  "action": "Ações",
+  "edit": "Editar",
+  "delete": "Deletar",
+  "alertFail": "Houve algum erro com o requerimento de dados",
+  "alertSuccess": "Veículo deletado com sucesso"
+}

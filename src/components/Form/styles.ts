@@ -6,6 +6,7 @@ export const Form = styled.form.attrs({
   flex: 1;
   width: 100%;
   display: flex;
+  margin: 20px 0;
   padding: 20px 5%;
   border-radius: 5px;
   flex-direction: column;
