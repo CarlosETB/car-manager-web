@@ -7,3 +7,13 @@ export const Title = styled.h1`
   align-items: center;
   justify-content: space-between;
 `;
+
+export const Name = styled.span`
+  font-size: 15px;
+  text-transform: uppercase;
+`;
+
+export const Brand = styled.text`
+  font-size: 15px;
+  text-transform: capitalize;
+`;

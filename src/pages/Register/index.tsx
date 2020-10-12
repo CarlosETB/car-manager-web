@@ -20,7 +20,7 @@ import { Cars } from 'shared/interface'
 // Hooks
 import { useAPI } from 'hooks'
  
-const Register = () => {
+const Register: React.FC  = () => {
   const { t } = useTranslation("Register");
 
   const [ formData, setFormData ] = useState<Cars>({})
@@ -74,15 +74,6 @@ const Register = () => {
           onChange={handleInputChange} 
         />  
 
-        <FormField  
-          name="price"  
-          type='number'
-          error={priceError}
-          value={formData.price}
-          label={t('Glossary:price')}
-          onChange={handleInputChange}
-        />
-
         <FormField 
           name="brand"  
           error={brandError}
@@ -90,6 +81,15 @@ const Register = () => {
           value={formData.brand}
           label={t('Glossary:brand')}
           onChange={handleInputChange} 
+        />
+
+        <FormField  
+          name="price"  
+          type='number'
+          error={priceError}
+          value={formData.price}
+          label={t('Glossary:price')}
+          onChange={handleInputChange}
         />
 
         <FormField 

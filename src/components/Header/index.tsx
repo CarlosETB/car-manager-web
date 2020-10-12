@@ -13,7 +13,7 @@ import { Logo } from "shared/images";
 // Private
 import { Container, Image } from "./styles";
 
-const Header = () => {
+const Header: React.FC  = () => {
   const history = useHistory();
 
   const { t } = useTranslation("Header");

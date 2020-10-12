@@ -18,7 +18,7 @@ import { useAPI, useInputChange } from 'hooks'
 import { brandList } from 'shared/constants'
 import { Cars } from 'shared/interface'
 
-const Edit = () => {
+const Edit: React.FC = () => {
   const { t } = useTranslation("Edit");
 
   const [ formData, setFormData ] = useState<Cars>({})
@@ -70,7 +70,16 @@ const Edit = () => {
           value={formData.title}
           label={t('Glossary:name')}
           onChange={handleInputChange} 
-        />  
+        />    
+              
+        <FormField 
+          name="brand"  
+          error={brandError}
+          suggestions={options}
+          value={formData.brand}
+          label={t('Glossary:brand')}
+          onChange={handleInputChange} 
+        />
 
         <FormField  
           name="price"  
@@ -79,15 +88,6 @@ const Edit = () => {
           value={formData.price}
           label={t('Glossary:price')}
           onChange={handleInputChange}
-        />
-        
-        <FormField 
-          name="brand"  
-          error={brandError}
-          suggestions={options}
-          value={formData.brand}
-          label={t('Glossary:brand')}
-          onChange={handleInputChange} 
         />
 
         <FormField 

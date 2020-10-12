@@ -6,7 +6,7 @@ import { useAPI } from 'hooks'
 // Shared
 import { Cars } from 'shared/interface'
 
-export default (setData: any) => {
+export default (setData?: any) => {
     const [apiItem, setApiItem] = useState([])
     const { apiGet } = useAPI(setApiItem)
 

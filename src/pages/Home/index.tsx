@@ -15,7 +15,7 @@ import {  useAPI, useInputChange } from 'hooks'
 // Shared
 import { columnList } from 'shared/constants'
 
-const Home = () => {
+const Home: React.FC  = () => {
   const { t } = useTranslation("Home");
 
   const [dataSource, setDataSource] = useState([])

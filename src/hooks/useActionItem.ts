@@ -1,34 +1,26 @@
 // Native
-import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
-// Services
-import api from "services/api";
+// Hooks
+import { useAPI } from 'hooks'
 
 export default () => {
     const history = useHistory();
-    const { t } = useTranslation("");
+    const { apiDelete } = useAPI()
   
-
-    const handleEdit = async (id: string) => {
-        history.push({
-            pathname: '/editar',
-            state: id
-        })
+    const handleEdit = async (id?: string) => {
+      history.push({
+          pathname: '/editar',
+          state: id
+      })
     }
 
-    const handleDelete = async (id: string) => {
-        await api.delete(`cars/${id}`).then(() => {
-          alert(t('alertSuccess'))
-          window.location.reload()
-        })
-        .catch((e) => {
-          alert(e)
-        }) 
-      }
+    const handleDelete = async (id?: string) => {
+      apiDelete(String(id))
+    }
 
     return {
-        handleEdit,
-        handleDelete
+      handleEdit,
+      handleDelete
     }
 }
