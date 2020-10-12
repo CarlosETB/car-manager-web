@@ -9,6 +9,7 @@ export const Container = styled.header`
   top: 0;
   left: 0;
   right: 0;
+  cursor: pointer;
   padding-left: 5%;
   padding-right: 5%;
   background: var(--white);

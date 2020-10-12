@@ -21,7 +21,7 @@ import { Cars } from '../../shared/interface'
 const Edit = () => {
     const [ formData, setFormData ] = useState<Cars>({})
 
-    const { t } = useTranslation("Edit");
+    const { t } = useTranslation(["Glossary", "Edit"]);
 
     const history = useHistory();
     const location = useLocation()
