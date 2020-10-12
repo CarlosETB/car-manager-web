@@ -22,8 +22,8 @@ const Home = () => {
   const [loading, setLoading] = useState(true)
   const { columns } = columnList()
 
-  const { apiGet } = useAPI(setDataSource)
   const { handleSearchChange } = useInputChange(setDataSource)
+  const { apiGet } = useAPI(setDataSource)
 
   const isLoading = Boolean(dataSource.length > 0)
 
