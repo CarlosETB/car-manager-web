@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
 // Components
-import PageDefault from '../../components/PageDefault'
-import { Button } from '../../components/Button'
+import PageDefault from 'components/PageDefault'
+import { Button } from 'components/Button'
 
 // Private
 import { Container, Text } from './styles'

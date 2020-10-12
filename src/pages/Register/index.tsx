@@ -4,21 +4,21 @@ import React, { FormEvent, useState } from 'react'
 import { useTranslation } from "react-i18next";
 
 // Components
-import PageDefault from '../../components/PageDefault'
-import FormField from '../../components/FormField'
-import { Button } from '../../components/Button'
-import { Title } from '../../components/Text'
-import { Form } from '../../components/Form'
+import PageDefault from 'components/PageDefault'
+import FormField from 'components/FormField'
+import { Button } from 'components/Button'
+import { Title } from 'components/Text'
+import { Form } from 'components/Form'
 
 // Hooks
-import { useInputChange } from '../../hooks'
+import { useInputChange } from 'hooks'
 
 // Shared 
-import { brandList } from '../../shared/constants'
-import { Cars } from '../../shared/interface'
+import { brandList } from 'shared/constants'
+import { Cars } from 'shared/interface'
 
 // Hooks
-import { useAPI } from '../../hooks'
+import { useAPI } from 'hooks'
  
 const Register = () => {
   const { t } = useTranslation("Register");

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
 // Services
-import api from "../services/api";
+import api from "services/api";
 
 export default () => {
     const history = useHistory();

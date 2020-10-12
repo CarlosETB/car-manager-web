@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
 // Services
-import api from "../services/api";
+import api from "services/api";
 
 // Shared
-import { Cars } from '../shared/interface'
+import { Cars } from 'shared/interface'
 
 export default (setData: any) => {
     const { t } = useTranslation("");

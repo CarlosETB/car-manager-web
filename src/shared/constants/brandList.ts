@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 // Services
-import api from "../../services/api";
+import api from "services/api";
 
 export default () => {
     const [ data, setData ] = useState([])

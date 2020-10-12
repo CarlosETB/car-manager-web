@@ -5,10 +5,10 @@ import { useTranslation } from "react-i18next";
 import { Space, Button } from 'antd'
 
 // Hooks
-import { useActionItem, useMoneyFormat } from '../../hooks'
+import { useActionItem, useMoneyFormat } from 'hooks'
 
 // Shared
-import { Cars } from '../interface'
+import { Cars } from 'shared/interface'
 
 export default () => { 
   const { handleEdit, handleDelete } = useActionItem()

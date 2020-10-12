@@ -2,7 +2,7 @@
 import React, { ReactNode } from "react";
 
 // Components
-import Header from "../Header";
+import Header from "components/Header";
 
 // Private
 import { Main } from "./styles";
