@@ -1,50 +1,33 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 
-// Native
-import { Alert } from 'antd'
-import axios from 'axios';
-
 // Components
-import FormField from '../../components/FormField'
 import PageDefault from '../../components/PageDefault'
-import { Title } from '../../components/Text'
+import FormField from '../../components/FormField'
 import { Button } from '../../components/Button'
-
-import { useMoneyFormat } from '../../hooks'
+import { Title } from '../../components/Text'
+import { Form } from '../../components/Form'
 
 // Services
 import api from "../../services/api";
 
 // Shared
+import { brandList } from '../../shared/constants'
 import { Cars } from '../../shared/interface'
 
-// Private
-import { Form } from './styles'
-
 const Register = () => {
-  const [ data, setData ] = useState([])
   const [ formData, setFormData ] = useState<Cars>({})
-  const itemBrand = data.map(({ brand }) => brand)
-
-  const { handleMoneyFormat } = useMoneyFormat()
-
-  const options = itemBrand.filter(function(index, id) {
-    return itemBrand.indexOf(index) === id;
-  });
+  
+  const { options } = brandList()
 
   useEffect(() => {
-    try {
-      api.get('cars').then((response) => {
-        if(response.status === 200){
-          setData(response.data)
-        } 
-        else {
-          alert('Houve algum erro com o requerimento de dados')
-        }
-      });
-    } catch (e) {
-      console.log(e)
-    } 
+    api.get('cars').then((response) => {
+      if(response.status === 200){
+        setFormData(response.data)
+      } 
+      else {
+        alert('Houve algum erro com o requerimento de dados')
+      }
+    });
   }, []);
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>) {

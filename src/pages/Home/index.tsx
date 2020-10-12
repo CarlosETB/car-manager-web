@@ -1,8 +1,8 @@
 import React, { useEffect, useState, ChangeEvent } from 'react'
 
 // Native
+import { useHistory } from "react-router-dom";
 import { Space, Button } from 'antd'
-import axios from 'axios'
 
 // Components
 import { InputSearch } from '../../components/TextInput'
@@ -25,6 +25,7 @@ const Home = () => {
   const [dataSource, setDataSource] = useState([])
 
   const { handleMoneyFormat } = useMoneyFormat()
+  const history = useHistory();
 
   const columns = [
       {
@@ -54,6 +55,12 @@ const Home = () => {
         key: "_id",
         render: (key: Cars) => (
           <Space size="middle">
+             <Button 
+              type="link" 
+              onClick={() => handleEdit(String(key._id))}>
+              Editar
+            </Button>
+
             <Button 
               type="link" 
               danger 
@@ -66,19 +73,15 @@ const Home = () => {
   ];
 
   useEffect(() => {
-    try {
-      api.get('cars').then((response) => {
-        if(response.status === 200){
-          setData(response.data)
-          setDataSource(response.data)
-        } 
-        else {
-          alert('Houve algum erro com o requerimento de dados')
-        }
-      });
-    } catch (e) {
-      console.log(e)
-    } 
+    api.get('cars').then((response) => {
+      if(response.status === 200){
+        setData(response.data)
+        setDataSource(response.data)
+      } 
+      else {
+        alert('Houve algum erro com o requerimento de dados')
+      }
+    });
   }, []);
 
   const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -88,6 +91,13 @@ const Home = () => {
       return item.title?.toLowerCase().match( value.toLowerCase() )
     });
     setDataSource(filtered)
+  }
+
+  const handleEdit = async (id: string) => {
+    history.push({
+      pathname: '/editar',
+      state: id
+    })
   }
 
   const handleDelete = async (id: string) => {
