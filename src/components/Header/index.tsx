@@ -18,15 +18,18 @@ const Header = () => {
 
   const { t } = useTranslation("Header");
 
+  const handleHome = async () => {
+    history.push("/");
+  };
+
   const handleCreate = async () => {
     history.push("/cadastrar");
   };
 
   return (
     <Container>
-      <Link to="/">
-        <Image src={Logo} />
-      </Link>
+      <Image src={Logo} onClick={handleHome}/>
+      
 
       <Button onClick={handleCreate}>{t('button')}</Button>
     </Container>

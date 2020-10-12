@@ -13,7 +13,7 @@ import { Form } from '../../components/Form'
 // Services
 import api from "../../services/api";
 
-// Shared
+// Shared 
 import { brandList } from '../../shared/constants'
 import { Cars } from '../../shared/interface'
 
@@ -22,7 +22,7 @@ const Register = () => {
   
   const { options } = brandList()
 
-  const { t } = useTranslation("Register");
+  const { t } = useTranslation(["Glossary", "Register"]);
 
   useEffect(() => {
     api.get('cars').then((response) => {

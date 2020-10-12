@@ -65,6 +65,8 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - **[TypeScript](https://www.typescriptlang.org/)**
 - **[Styled Components](https://styled-components.com/)**
 - **[Ant Design](https://ant.design/)**
+- **[i18next](https://www.i18next.com/)**
+- **[React i18next](https://www.i18next.com/)**
 
 \* Veja o arquivo <kbd>[package.json](./package.json)</kbd>
 

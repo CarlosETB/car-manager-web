@@ -1,10 +1,6 @@
 {
-  "title": "Cadastrar veículo",
+  "title": "Cadastrar Veículo",
   "alertFail": "Houve algum erro com o requerimento de dados",
   "alertSuccess": "Veículo cadastrado com sucesso",
-  "name": "Nome",
-  "price": "Preço",
-  "brand": "Marca",
-  "age": "Ano",
   "button": "Cadastrar"
 }
