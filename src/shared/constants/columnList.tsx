@@ -1,7 +1,7 @@
 import React from 'react'
 
 // Native
-import { Space, Button, Popconfirm } from 'antd'
+import { Space, Button, Popconfirm, Tooltip } from 'antd'
 import { useTranslation } from "react-i18next";
 
 // Components
@@ -47,22 +47,25 @@ export default () => {
       key: "_id",
       render: (key: Cars) => (
         <Space size="middle">
-           <Button 
-            type="link" 
-            onClick={() => handleEdit(String(key._id))}>
-            {t('Glossary:edit')}
-          </Button>
-            
-          <Popconfirm 
-            title={t('messageSure')} 
-            onConfirm={() => handleDelete(String(key._id))}
-          > 
-            <Button 
+          <Tooltip placement="top" title={t('tooltipEdit')}>
+             <Button 
               type="link" 
-              danger >
-              {t('Glossary:delete')}
+              onClick={() => handleEdit(String(key._id))}>
+              {t('Glossary:edit')}
             </Button>
-          </Popconfirm>
+          </Tooltip>
+          
+          <Tooltip placement="top" title={t('tooltipDelete')}>
+            <Popconfirm 
+              title={t('messageSure')} 
+              onConfirm={() => handleDelete(String(key._id))}
+            > 
+           
+              <Button type="link" danger >
+                {t('Glossary:delete')}
+              </Button>
+            </Popconfirm>
+          </Tooltip>
           
         </Space>
       )

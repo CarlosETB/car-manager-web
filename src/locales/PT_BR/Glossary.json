@@ -10,5 +10,7 @@
   "edit": "Editar",
   "delete": "Deletar",
   "errorInput": "Preencha esse campo",
-  "messageSure": "Tem certeza?"
+  "messageSure": "Tem certeza?",
+  "tooltipEdit": "Editar dados do veículo",
+  "tooltipDelete": "Deletar dados do veículo"
 }
