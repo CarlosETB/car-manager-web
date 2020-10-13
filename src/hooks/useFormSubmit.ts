@@ -17,13 +17,6 @@ export default (formData?: any, apiAction?: any) => {
     event.preventDefault();
 
     const { title, price, age, brand } = formData;
-
-    const data = new FormData();
-    
-    data.append("title", String(title));
-    data.append("price", String(price));
-    data.append("age", String(age));
-    data.append("brand", String(brand));
     
     if(title === '') {
       setTitleError(t('Glossary:errorInput'))

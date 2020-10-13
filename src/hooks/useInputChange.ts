@@ -31,7 +31,7 @@ export default (setData?: any) => {
     }
 
     return {
-        handleInputChange,
-        handleSearchChange,
+      handleInputChange,
+      handleSearchChange,
     }
 }

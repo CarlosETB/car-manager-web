@@ -22,8 +22,8 @@ export const LabelText = styled.span`
 `;
 
 interface InputProps {
+  value: string;
   error: boolean;
-  value: string[];
 }
 
 export const Input = styled.input<InputProps>`
