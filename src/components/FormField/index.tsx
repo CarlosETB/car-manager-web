@@ -18,7 +18,7 @@ interface LayoutProps {
   onChange?: any;
   error?: string;
   suggestions?: any[];
-  type?: 'string' | 'number' | 'age'
+  type?: 'string' | 'number'
 }
 
 const FormField: React.FC<LayoutProps> = (props) => {
@@ -45,7 +45,7 @@ const FormField: React.FC<LayoutProps> = (props) => {
     type,
     onChange,
     min: min || 0,
-    value: value || '',
+    value: value || "",
     autoComplete: "off",
     list: `suggestionFor_${id}`,
     error: hasValue && !hasError,

@@ -1,4 +1,5 @@
 {
   "title": "Cadastrar veículo",
-  "button": "Salvar mudanças"
+  "button": "Salvar mudanças",
+  "alertMessage": "Informe um item para ser editado"
 }
