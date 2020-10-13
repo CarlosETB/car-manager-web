@@ -30,7 +30,7 @@ const Home: React.FC  = () => {
   useEffect(() => {
     apiGet()
     setLoading(!isLoading)
-  }, [apiGet, isLoading]);
+  }, [isLoading]);
 
   return (
     <PageDefault>

@@ -10,8 +10,8 @@ export default () => {
   
     const handleEdit = async (id?: string) => {
       history.push({
-          pathname: '/editar',
-          state: id
+        pathname: '/editar',
+        state: id
       })
     }
 

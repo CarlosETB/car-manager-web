@@ -6,7 +6,9 @@
   "action": "Ações",
   "alertFail": "Houve algum erro com o requerimento de dados",
   "alertSuccess": "Dados salvos com sucesso",
+  "alertDelete": "Dados deletado com sucesso",
   "edit": "Editar",
   "delete": "Deletar",
-  "errorInput": "Preencha esse campo"
+  "errorInput": "Preencha esse campo",
+  "messageSure": "Tem certeza?"
 }

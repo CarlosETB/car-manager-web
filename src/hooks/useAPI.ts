@@ -15,12 +15,10 @@ export default (setData?: any) => {
     const apiDelete = async (id?: string) => {
       await api.delete(`cars/${id}`)
         .then(() => {
-          alert(t('alertSuccess'))
+          alert(t('alertDelete'))
           window.location.reload()
         })
-        .catch((e) => {
-          alert(e)
-        }) 
+        .catch((e) => alert(e)) 
     }
 
     const apiGet = async () => {

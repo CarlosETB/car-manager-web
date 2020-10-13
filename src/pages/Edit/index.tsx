@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 // Native
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom"
 
 // Components
 import PageDefault from 'components/PageDefault'
@@ -20,6 +21,7 @@ import { Cars } from 'shared/interface'
 
 const Edit: React.FC = () => {
   const { t } = useTranslation("Edit");
+  const history = useHistory()
 
   const [ formData, setFormData ] = useState<Cars>({})
 
@@ -40,8 +42,14 @@ const Edit: React.FC = () => {
   const id = location.state
 
   useEffect(() => {
-    apiGetID(String(id))
-  }, []);
+    if (id === undefined) {
+      alert(t('alertMessage'))
+      history.push('/')
+    }
+    else {
+      apiGetID(String(id))
+    }
+  }, [id]);
 
   return (
     <PageDefault>

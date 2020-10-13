@@ -1,8 +1,8 @@
 import React from 'react'
 
 // Native
+import { Space, Button, Popconfirm } from 'antd'
 import { useTranslation } from "react-i18next";
-import { Space, Button } from 'antd'
 
 // Components
 import { Name, Brand } from 'components/Text'
@@ -52,12 +52,18 @@ export default () => {
             onClick={() => handleEdit(String(key._id))}>
             {t('Glossary:edit')}
           </Button>
-          <Button 
-            type="link" 
-            danger 
-            onClick={() => handleDelete(String(key._id))}>
-            {t('Glossary:delete')}
-          </Button>
+            
+          <Popconfirm 
+            title={t('messageSure')} 
+            onConfirm={() => handleDelete(String(key._id))}
+          > 
+            <Button 
+              type="link" 
+              danger >
+              {t('Glossary:delete')}
+            </Button>
+          </Popconfirm>
+          
         </Space>
       )
     }

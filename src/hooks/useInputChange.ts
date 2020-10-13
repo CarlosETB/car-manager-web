@@ -12,7 +12,7 @@ export default (setData?: any) => {
 
     useEffect(() => {
       apiGet()
-    }, []);
+    }, [apiGet]);
 
     const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
