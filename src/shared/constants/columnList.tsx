@@ -47,7 +47,7 @@ export default () => {
       key: "_id",
       render: (key: Cars) => (
         <Space size="middle">
-          <Tooltip placement="top" title={t('tooltipEdit')}>
+          <Tooltip title={t('tooltipEdit')}>
              <Button 
               type="link" 
               onClick={() => handleEdit(String(key._id))}>
@@ -55,7 +55,7 @@ export default () => {
             </Button>
           </Tooltip>
           
-          <Tooltip placement="top" title={t('tooltipDelete')}>
+          <Tooltip title={t('tooltipDelete')}>
             <Popconfirm 
               title={t('messageSure')} 
               onConfirm={() => handleDelete(String(key._id))}

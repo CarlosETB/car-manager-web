@@ -22,7 +22,11 @@ export default (setData?: any) => {
     }
 
     const apiGet = async () => {
-      await api.get('cars').then((response) => {
+      await api.get('cars', {
+        headers: {
+          'Access-Control-Allow-Origin': true,
+        },
+      }).then((response) => {
         if(response.status === 200) {
           return setData(response.data)
         } 
